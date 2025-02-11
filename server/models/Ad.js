@@ -9,6 +9,8 @@ const adSchema = new mongoose.Schema({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   active: { type: Boolean, default: true },
+  resolution:{type: String, enum:['Res1','Res2', 'Res3'], required: true},
+  orient:{type:String, required:true},
 });
 
 module.exports = mongoose.model('Ad', adSchema);

@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./configs/db');
 const userRoutes = require('./routes/userRoutes');
 const adRoutes = require('./routes/adRoutes');
+const path = require('path');
 // Initialize environment variables
 dotenv.config();
 
@@ -14,11 +15,13 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors(
-    ""
+    '*'
 ));
 
 // Database connection
 connectDB();
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
 app.use('/api/users', userRoutes);

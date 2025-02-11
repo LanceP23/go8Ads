@@ -4,7 +4,7 @@ const {verifyToken} = require('../middleware/verifyToken')
 const { createAd, getAllAds, getAdById, updateAd, deleteAd } = require('../controllers/Ads/adsController');
 
 // Create a new Ad
-router.post('/ads/create',verifyToken, createAd);
+router.post('/ads/create', createAd);
 
 // Get all Ads
 router.get('/ads', getAllAds);
