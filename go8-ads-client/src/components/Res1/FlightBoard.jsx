@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { FlapDisplay, Presets } from "react-split-flap-effect";
+import { motion } from "framer-motion";
 import FlightData from "./flightDetails";
+import 'react-split-flap-effect/extras/themes.css';
 
 const FlightBoard = () => {
     const [flights, setFlights] = useState(FlightData);
+    const intervalRef = useRef(null);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setFlights([...FlightData].sort(() => Math.random() - 0.5));
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+        const updateFlights = () => {
+            setFlights((prevFlights) =>
+                prevFlights.map(() => FlightData[Math.floor(Math.random() * FlightData.length)])
+            );
+        };
+
+        intervalRef.current = setInterval(updateFlights, 5000); // Update every 5 seconds
+
+        return () => clearInterval(intervalRef.current);
+    }, []); // Empty dependency to run only once
 
     return (
         <div className="w-full h-full p-4 bg-[#d4e9f9] rounded-lg shadow-md">
@@ -30,42 +38,89 @@ const FlightBoard = () => {
                             <th className="p-3 text-left">Return Date</th>
                         </tr>
                     </thead>
-                    <AnimatePresence>
-                        <tbody>
-                            {flights.map((flight) => (
-                                <motion.tr
-                                    key={flight.id}
-                                    className="hover:bg-[#d4e9f9] transition-colors"
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.airline}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.flight_no}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.trip_type}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.departure_airport}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.arrival_airport}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.departure_date}
-                                    </td>
-                                    <td className="p-3 border-b border-[#d4e9f9]">
-                                        {flight.return_date || "N/A"}
-                                    </td>
-                                </motion.tr>
-                            ))}
-                        </tbody>
-                    </AnimatePresence>
+                    <tbody>
+                        {flights.map((flight, index) => (
+                            <motion.tr
+                                key={index}
+                                className="hover:bg-[#d4e9f9] transition-colors"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 10 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM}
+                                        length={10}
+                                        value={flight.airline}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM}
+                                        length={6}
+                                        value={flight.flight_no}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM}
+                                        length={10}
+                                        value={flight.trip_type}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM}
+                                        length={3}
+                                        value={flight.departure_airport}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM}
+                                        length={3}
+                                        value={flight.arrival_airport}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM + "-"}
+                                        length={10}
+                                        value={flight.departure_date}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                                <td className="p-3 border-b border-[#d4e9f9]">
+                                    <FlapDisplay
+                                        chars={Presets.ALPHANUM + "-"}
+                                        length={10}
+                                        value={flight.return_date || "N/A"}
+                                        timing={30}
+                                        hinge={false}
+                                        className="lightBordered"
+                                    />
+                                </td>
+                            </motion.tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
         </div>
