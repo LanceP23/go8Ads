@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FlightBoard from "./FlightBoard";
-import sampleAds from "../../../../server/uploads/1739250581278.gif";
 
 function Res1() {
     const [isAds, toggleAds] = useState(false);
@@ -36,7 +35,7 @@ function Res1() {
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="ads w-1/4 bg-black text-white flex items-center justify-center"
                     >
-                        <img className="w-full h-full" src={sampleAds} alt="ads" />
+                        <img className="w-full h-full" src="http://localhost:5000/uploads/1739250581278.gif" alt="ads" />
                     </motion.div>
                 )}
             </AnimatePresence>
