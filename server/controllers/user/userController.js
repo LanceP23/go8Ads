@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 
 const createUser = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ message: 'Username and password are required' });
