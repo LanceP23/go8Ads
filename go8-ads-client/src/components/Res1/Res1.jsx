@@ -35,7 +35,7 @@ function Res1() {
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="ads w-1/4 bg-black text-white flex items-center justify-center"
                     >
-                        <img className="w-full h-full" src="http://localhost:5000/uploads/1739250581278.gif" alt="ads" />
+                        <img className="w-full h-full" src="http://localhost:5000/uploads/1739260172178.gif" alt="ads" />
                     </motion.div>
                 )}
             </AnimatePresence>
