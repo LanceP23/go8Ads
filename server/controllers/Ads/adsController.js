@@ -79,7 +79,7 @@ const updateAd = async (req, res) => {
         const { title, mediaType, duration, priority, startDate, endDate } = req.body;
 
         // If a file is uploaded, get the file path, else keep the existing one
-        const mediaUrl = req.file ? req.file.path : req.body.mediaUrl;  // If no file, use the previous mediaUrl from the request body
+        const mediaUrl = req.file ? `uploads/${req.file.filename}` : req.body.mediaUrl; // If no file, use the previous mediaUrl from the request body
 
         // Ensure all required fields are present
         if (!title || !mediaType || !mediaUrl || !duration || !startDate || !endDate) {
